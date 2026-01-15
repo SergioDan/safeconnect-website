@@ -5,8 +5,7 @@
   "license": "MIT",
   "scripts": {
     "dev": "vite --host",
-    "build": "pnpm --dir client build",
-    "start": "NODE_ENV=production node dist/index.js",
+    "build": "vite build",
     "preview": "vite preview --host",
     "check": "tsc --noEmit",
     "format": "prettier --write ."
