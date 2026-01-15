@@ -1,410 +1,325 @@
 /* ======================================================
-   CARO FLOWER ART – GLOBAL CSS (responsive)
+   CARO FLOWER ART – GLOBAL CSS
+   (Mobile-first, fixes header/logo truncation + layout)
    ====================================================== */
 
 :root{
-  --bg: #fff7f8;
-  --card: #ffffff;
-  --text: #2b2b2b;
-  --muted: #6b6b6b;
-
-  --primary: #e89aa6;
-  --primary-2: #f5d7dc;
+  --bg: #ffffff;
+  --text: #1f1f1f;
+  --muted: rgba(0,0,0,.6);
+  --border: rgba(0,0,0,.10);
+  --primary: #e8a0ae;
 
   --radius: 18px;
-  --shadow: 0 10px 30px rgba(0,0,0,.06);
+  --shadow: 0 10px 30px rgba(0,0,0,.08);
+
+  --max: 1100px;
+  --pad: 16px;
 
   --header-h: 64px;
 }
 
-*{ box-sizing:border-box; }
-html, body{ height:100%; }
-body{
-  margin:0;
-  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-  color:var(--text);
-  background: var(--bg);
-  overflow-x:hidden;
-}
-
+/* Basic reset */
+*{ box-sizing: border-box; }
+html, body{ margin:0; padding:0; }
 img{ max-width:100%; display:block; }
-a{ color:inherit; text-decoration:none; }
-.es{ display:block; color:var(--muted); font-style:italic; margin-top:6px; font-size: .92em; }
-
-.container{
-  max-width: 1120px;
-  margin: 0 auto;
-  padding: 0 16px;
+a{ color: inherit; text-decoration: none; }
+body{
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.35;
 }
 
-/* ---------------- HEADER ---------------- */
+/* Make sure anchor jumps account for sticky header */
+body{
+  scroll-padding-top: calc(var(--header-h) + 12px);
+}
+
+/* Utilities */
+.container{
+  width: min(100%, var(--max));
+  margin: 0 auto;
+  padding: 0 var(--pad);
+}
+
+/* ======================================================
+   HEADER
+   ====================================================== */
 .site-header{
   position: sticky;
   top: 0;
   z-index: 50;
-  background: rgba(255,255,255,.85);
+  background: rgba(255,255,255,.92);
   backdrop-filter: blur(10px);
-  border-bottom: 1px solid rgba(0,0,0,.06);
+  border-bottom: 1px solid var(--border);
 }
 
 .header-inner{
   height: var(--header-h);
-  display:flex;
-  align-items:center;
-  justify-content: space-between;
+  display: flex;
+  align-items: center;
   gap: 14px;
-  padding: 10px 14px;
-  max-width: 1120px;
+  padding: 0 var(--pad);
+  width: min(100%, var(--max));
   margin: 0 auto;
 }
 
+/* Brand */
 .brand{
-  display:flex;
-  align-items:center;
-  gap:10px;
-  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: max-content; /* prevents "Car..." */
+  flex: 0 0 auto;
 }
 
 .brand-logo{
-  width: 34px;
-  height: 34px;
+  width: 42px;
+  height: 42px;
+  object-fit: contain;
   flex: 0 0 auto;
 }
 
 .brand-name{
-  font-weight: 700;
-  letter-spacing:.2px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  max-width: 220px;
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: .2px;
+  white-space: nowrap; /* prevents truncation */
 }
 
-/* en móvil ocultamos el texto para que no salga “Car…” */
-@media (max-width: 520px){
-  .brand-name{ display:none; }
-}
-
+/* Nav */
 .nav{
-  display:flex;
-  align-items:center;
+  margin-left: auto;
+  display: flex;
+  align-items: center;
   gap: 10px;
-  overflow-x:auto;
+  overflow-x: auto;
   -webkit-overflow-scrolling: touch;
+  white-space: nowrap;
   padding-bottom: 2px;
 }
+
+.nav::-webkit-scrollbar{ height: 6px; }
+.nav::-webkit-scrollbar-thumb{ background: rgba(0,0,0,.12); border-radius: 10px; }
 
 .nav-link{
   font-weight: 600;
   font-size: 14px;
   padding: 8px 10px;
   border-radius: 999px;
+  border: 1px solid transparent;
   white-space: nowrap;
-  text-decoration: none;
 }
+
 .nav-link:hover{
   background: rgba(0,0,0,.05);
 }
 
 .nav-cta{
-  background: var(--primary);
-  color: #fff;
-}
-.nav-cta:hover{
-  background: #db8592;
+  border-color: rgba(232,160,174,.55);
+  background: rgba(232,160,174,.18);
 }
 
-/* evita que el contenido quede “debajo” del header */
-body{ scroll-padding-top: calc(var(--header-h) + 12px); }
+/* On very small screens, slightly reduce brand text but NEVER ellipsis */
+@media (max-width: 420px){
+  :root{ --header-h: 60px; }
+  .brand-name{ font-size: 18px; }
+  .brand-logo{ width: 38px; height: 38px; }
+}
 
-/* ---------------- HERO ---------------- */
+/* ======================================================
+   HERO
+   ====================================================== */
 .hero{
-  padding: 44px 0 18px;
-}
-
-.hero-card{
-  background: #fff;
-  border-radius: 24px;
-  box-shadow: var(--shadow);
-  overflow:hidden;
+  position: relative;
+  padding: 40px var(--pad) 26px;
 }
 
 .hero-inner{
-  padding: 34px 18px 26px;
-  text-align:center;
-  background:
-    linear-gradient(180deg, rgba(255,255,255,.88), rgba(255,255,255,.92)),
-    url("/images/hero-poster.webp") center/cover no-repeat;
+  width: min(100%, var(--max));
+  margin: 0 auto;
+  text-align: center;
 }
 
-.kicker{
-  color: var(--primary);
-  font-weight: 700;
-  letter-spacing:.2px;
+.hero-bg{
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
 }
-.kicker .es{ color: rgba(232,154,166,.9); font-style: italic; }
 
+.hero-bg img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: .95;
+}
+
+.hero-overlay{
+  position: absolute;
+  inset: 0;
+  background: rgba(255,255,255,.55);
+}
+
+/* Headings */
 .hero h1{
-  margin: 14px 0 10px;
-  font-family: Georgia, "Times New Roman", serif;
-  font-size: clamp(34px, 7vw, 56px);
-  line-height: 1.05;
-}
-.hero h2{
-  margin: 0 0 14px;
-  font-family: Georgia, "Times New Roman", serif;
-  font-style: italic;
-  font-weight: 500;
-  color: #444;
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: clamp(36px, 7vw, 58px);
+  margin: 12px 0 8px;
 }
 
-.subtitle{
+.hero .subtitle{
+  color: var(--muted);
   max-width: 720px;
   margin: 0 auto;
-  color: var(--muted);
-  font-size: 16px;
-  line-height: 1.55;
 }
 
-/* feature pills */
-.pills{
-  margin: 18px auto 0;
-  max-width: 720px;
-  display:grid;
-  gap: 10px;
-}
-.pill{
-  background: rgba(255,255,255,.72);
-  border: 1px solid rgba(0,0,0,.06);
-  border-radius: 999px;
-  padding: 12px 14px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  gap: 10px;
-  box-shadow: 0 8px 20px rgba(0,0,0,.05);
-  font-weight: 700;
-}
-.pill small{
-  font-weight: 600;
-  color: var(--muted);
-  font-style: italic;
-}
-
-/* hero buttons */
-.hero-actions{
-  display:flex;
-  gap: 12px;
-  justify-content:center;
-  flex-wrap: wrap;
-  margin-top: 18px;
-}
-
-.btn{
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  gap:10px;
-  padding: 12px 18px;
-  border-radius: 999px;
-  font-weight: 800;
-  border: 2px solid transparent;
-  text-decoration:none;
-}
-
-.btn-primary{
-  background: var(--primary);
-  color:#fff;
-}
-.btn-primary:hover{ background:#db8592; }
-
-.btn-ghost{
-  background: transparent;
-  border-color: rgba(232,154,166,.8);
-  color: var(--primary);
-}
-.btn-ghost:hover{
-  background: rgba(232,154,166,.10);
-}
-
-/* ---------------- SECTION TITLES ---------------- */
-.section{
-  padding: 22px 0 40px;
-}
-
-.section h2{
-  margin: 22px 0 6px;
-  font-family: Georgia, "Times New Roman", serif;
-  font-size: 34px;
-}
-.section .sub{
-  margin: 0 0 18px;
-  color: var(--muted);
-  font-style: italic;
-}
-
-/* ---------------- FILTERS ---------------- */
-.filters{
-  display:flex;
-  gap: 10px;
-  flex-wrap: wrap;
-  justify-content:center;
-  margin: 14px 0 8px;
-}
-
-.filter-btn{
-  border: 1px solid rgba(0,0,0,.10);
-  background: #fff;
-  padding: 10px 16px;
-  border-radius: 999px;
-  font-weight: 800;
-  cursor:pointer;
-}
-.filter-btn.active{
-  background: var(--primary);
-  color:#fff;
-  border-color: transparent;
-}
-
-/* ---------------- GRID + CARDS ---------------- */
+/* ======================================================
+   GRID / CARDS
+   ====================================================== */
 .grid{
-  margin-top: 14px;
-  display:grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  width: min(100%, var(--max));
+  margin: 26px auto 50px;
+  padding: 0 var(--pad);
+
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
   gap: 18px;
 }
 
 .card{
-  background: var(--card);
+  background: #fff;
+  border: 1px solid var(--border);
   border-radius: var(--radius);
-  overflow:hidden;
-  box-shadow: var(--shadow);
+  overflow: hidden;
+  box-shadow: 0 1px 0 rgba(0,0,0,.02);
 }
 
 .card img{
-  width:100%;
+  width: 100%;
   height: 240px;
   object-fit: cover;
 }
 
 .card-content{
-  padding: 16px 16px 18px;
+  padding: 14px 14px 16px;
 }
 
 .card h3{
-  margin: 0 0 10px;
-  font-family: Georgia, "Times New Roman", serif;
+  font-family: "Cormorant Garamond", Georgia, serif;
   font-size: 22px;
+  margin: 0 0 8px;
+}
+
+.es{
+  display:block;
+  color: var(--muted);
+  font-size: 14px;
+  font-style: italic;
+  margin-top: 2px;
 }
 
 .price{
-  font-weight: 900;
-  font-size: 22px;
-  margin: 6px 0 14px;
+  font-weight: 700;
+  margin: 0 0 12px;
 }
 
 .card-actions{
-  display:flex;
-  gap: 12px;
+  display: flex;
+  gap: 10px;
 }
 
 .btn-quote, .btn-photos{
-  flex:1;
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  text-align:center;
-  padding: 12px 12px;
-  border-radius: 18px;
-  font-weight: 900;
-  text-decoration:none;
+  flex: 1;
+  text-align: center;
+  padding: 10px 12px;
+  border-radius: 14px;
+  font-weight: 700;
+  font-size: 14px;
+  border: 1px solid var(--border);
 }
 
 .btn-quote{
   background: var(--primary);
-  color:#fff;
+  color: #fff;
+  border-color: rgba(232,160,174,.8);
 }
-.btn-quote:hover{ background:#db8592; }
 
 .btn-photos{
-  border: 2px solid rgba(232,154,166,.55);
-  color: var(--primary);
-  background: transparent;
+  background: #fff;
 }
-.btn-photos:hover{ background: rgba(232,154,166,.10); }
 
-/* ---------------- MODAL (si lo usas) ---------------- */
+/* ======================================================
+   GALLERY MODAL (if used)
+   ====================================================== */
 .gallery-modal{
   position: fixed;
   inset: 0;
-  display:none;
-  z-index: 80;
+  display: none;
+  z-index: 100;
 }
-.gallery-modal.is-open{ display:block; }
+
+.gallery-modal.is-open{ display: block; }
 
 .gallery-backdrop{
-  position:absolute;
-  inset:0;
-  background: rgba(0,0,0,.55);
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,.45);
 }
 
 .gallery-panel{
   position: absolute;
-  inset: 14px;
-  max-width: 860px;
-  margin: auto;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: min(92vw, 720px);
   background: #fff;
   border-radius: 18px;
-  overflow:hidden;
-  box-shadow: 0 20px 60px rgba(0,0,0,.25);
-  display:flex;
-  flex-direction: column;
+  box-shadow: var(--shadow);
+  overflow: hidden;
 }
 
 .gallery-image-wrap{
-  flex:1;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  background: #f6f6f6;
+  background: #000;
 }
+
 .gallery-image-wrap img{
   width: 100%;
-  height: 100%;
+  height: min(60vh, 520px);
   object-fit: contain;
 }
 
+.gallery-meta{
+  padding: 14px 16px 16px;
+}
+
 .gallery-close{
-  position:absolute;
-  top: 10px;
+  position: absolute;
   right: 10px;
-  border:0;
-  background: rgba(0,0,0,.08);
+  top: 10px;
   width: 40px;
   height: 40px;
   border-radius: 999px;
+  border: 0;
+  background: rgba(255,255,255,.9);
   font-size: 22px;
-  cursor:pointer;
+  cursor: pointer;
 }
 
 .gallery-nav{
-  position:absolute;
+  position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  border:0;
-  background: rgba(0,0,0,.10);
   width: 44px;
   height: 44px;
   border-radius: 999px;
+  border: 0;
+  background: rgba(255,255,255,.9);
   font-size: 26px;
-  cursor:pointer;
+  cursor: pointer;
 }
+
 .gallery-prev{ left: 10px; }
 .gallery-next{ right: 10px; }
-
-.gallery-meta{
-  padding: 14px 16px;
-  border-top: 1px solid rgba(0,0,0,.06);
-}
-.gallery-title{ font-weight: 900; }
-.gallery-price{ color: var(--muted); margin-top: 6px; }
