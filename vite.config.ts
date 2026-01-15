@@ -4,15 +4,14 @@ import { fileURLToPath, URL } from "node:url";
 
 export default defineConfig({
   plugins: [react()],
-  root: "client",
-  base: "./",
+  base: "/safeconnect-website/",
   resolve: {
     alias: {
       "@": fileURLToPath(new URL("./client/src", import.meta.url)),
     },
   },
   build: {
-    outDir: "../dist",
+    outDir: "dist",
     emptyOutDir: true,
   },
 });
