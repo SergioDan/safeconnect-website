@@ -1,8 +1,7 @@
 import { defineConfig } from "vite";
 
 export default defineConfig({
-  root: ".",
-  base: "./",
+  base: "/safeconnect-website/",
   build: {
     outDir: "dist",
     emptyOutDir: true,
