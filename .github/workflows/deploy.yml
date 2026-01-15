@@ -18,19 +18,26 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-      - name: Enable corepack
-        run: corepack enable && corepack prepare pnpm@10.15.1 --activate
+
+      - name: Enable corepack (pnpm)
+        run: |
+          corepack enable
+          corepack prepare pnpm@10.15.1 --activate
+
       - name: Install dependencies
         run: pnpm install --no-frozen-lockfile
-      - name: Build
-        run: pnpm run build
+
+      - name: Build (noop – static root)
+        run: echo "No build needed, using root index.html"
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: dist
+          path: .
 
   deploy:
     needs: build
