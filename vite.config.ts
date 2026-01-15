@@ -12,7 +12,7 @@ export default defineConfig({
     },
   },
   build: {
-    outDir: "dist",
+    outDir: "../dist",      // <-- IMPORTANTE: deja dist en la raíz del repo
     emptyOutDir: true,
   },
 });

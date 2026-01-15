@@ -11,44 +11,39 @@ permissions:
 
 concurrency:
   group: pages
-  cancel-in-progress: false
+  cancel-in-progress: true
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Setup Node
-        uses: actions/setup-node@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: 20
 
-      - name: Enable corepack
-        run: corepack enable
+      - name: Enable corepack (pnpm)
+        run: |
+          corepack enable
+          corepack prepare pnpm@10.15.1 --activate
 
       - name: Install dependencies
         run: pnpm install --no-frozen-lockfile
 
-      - name: Build
-        run: pnpm build
+      - name: Build (Vite)
+        run: pnpm run build
 
-      - name: Debug build output
+      - name: Debug output
         run: |
-          echo "=== root ==="
-          ls -la
-          echo "=== client ==="
-          ls -la client
-          echo "=== client/dist ==="
-          ls -la client/dist || true
-          echo "=== client/dist/index.html ==="
-          ls -la client/dist/index.html || true
+          echo "=== dist ==="
+          ls -la dist || true
+          echo "=== dist/index.html ==="
+          ls -la dist/index.html || true
 
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
+      - uses: actions/upload-pages-artifact@v3
         with:
-          path: client/dist
+          path: dist
 
   deploy:
     needs: build
@@ -57,6 +52,5 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
-      - name: Deploy to GitHub Pages
-        id: deployment
+      - id: deployment
         uses: actions/deploy-pages@v4
