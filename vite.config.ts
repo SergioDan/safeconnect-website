@@ -1,18 +1,10 @@
 import { defineConfig } from "vite";
-import react from "@vitejs/plugin-react";
-import { fileURLToPath, URL } from "node:url";
 
 export default defineConfig({
-  plugins: [react()],
-  root: "client",
-  base: "/safeconnect-website/",
-  resolve: {
-    alias: {
-      "@": fileURLToPath(new URL("./client/src", import.meta.url)),
-    },
-  },
+  root: ".",
+  base: "./",
   build: {
-    outDir: "../dist",
+    outDir: "dist",
     emptyOutDir: true,
   },
 });
