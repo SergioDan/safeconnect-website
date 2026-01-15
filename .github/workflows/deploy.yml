@@ -34,10 +34,21 @@ jobs:
       - name: Build
         run: pnpm build
 
+      - name: Show output folders (debug)
+        run: |
+          echo "=== root ==="
+          ls -la
+          echo "=== dist ==="
+          ls -la dist || true
+          echo "=== client ==="
+          ls -la client || true
+          echo "=== client/dist ==="
+          ls -la client/dist || true
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: client/dist
+          path: dist
 
   deploy:
     needs: build
