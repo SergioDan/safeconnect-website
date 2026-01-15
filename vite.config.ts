@@ -11,4 +11,8 @@ export default defineConfig({
       "@": fileURLToPath(new URL("./client/src", import.meta.url)),
     },
   },
+  build: {
+    outDir: "dist",
+    emptyOutDir: true,
+  },
 });
