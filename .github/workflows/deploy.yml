@@ -34,14 +34,8 @@ jobs:
       - name: Build (Vite)
         run: pnpm run build
 
-      - name: Debug output
-        run: |
-          echo "=== dist ==="
-          ls -la dist || true
-          echo "=== dist/index.html ==="
-          ls -la dist/index.html || true
-
-      - uses: actions/upload-pages-artifact@v3
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
         with:
           path: dist
 

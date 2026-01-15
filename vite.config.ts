@@ -5,14 +5,14 @@ import { fileURLToPath, URL } from "node:url";
 export default defineConfig({
   plugins: [react()],
   root: "client",
-  base: "/safeconnect-website/",
+  base: "./",
   resolve: {
     alias: {
       "@": fileURLToPath(new URL("./client/src", import.meta.url)),
     },
   },
   build: {
-    outDir: "../dist",      // <-- IMPORTANTE: deja dist en la raíz del repo
+    outDir: "../dist",
     emptyOutDir: true,
   },
 });
